@@ -1,0 +1,12 @@
+<form>
+    <div class="file-field md-form">
+        <div mdbBtn floating="true" size="md" color="amber" mdbWavesEffect>
+            <mdb-icon fas icon="cloud-upload-alt" aria-hidden="true"></mdb-icon>
+            <input type="file" mdbFileSelect (change)="storeFile($event.target.files)">
+        </div>
+        <div class="file-path-wrapper mt-3">
+            <input class="file-path" type="text" placeholder="Upload your file" [value]="fileName">
+        </div>
+    </div>
+    <button mdbBtn type="button" color="amber" class="waves-light" (click)="processIntermediateXLSX()" mdbWavesEffect>Process Intermediate XLSX</button>
+</form>

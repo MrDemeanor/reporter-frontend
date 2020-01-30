@@ -1,0 +1,88 @@
+<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+            <span aria-hidden="true">×</span>
+          </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Rename Test</h4>
+            </div>
+            <div class="modal-body">
+                <div class="md-form">
+                    <input mdbInput type="text" id="form1" class="form-control" [(ngModel)]="rename">
+                    <label for="form1" class="">Rename test</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="basicModal.hide(); rename = ''" mdbWavesEffect>Close</button>
+                <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect (click)="renameTest(); rename = ''">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<mdb-stepper #stepper>
+
+    <!-- Step 1 -->
+    <mdb-step name="Step 1">
+        <div class="text-center"><button mdbBtn mdbWavesEffect size="md" (click)=addTest()><strong>ADD TEST</strong></button></div>
+
+        <!-- Singular file input for data file-->
+        <input type="file" style="display: none;" (change)="selectedDataFile($event)" #dataFileInput>
+
+        <!-- Singular file input for learning objective file-->
+        <input type="file" style="display: none;" (change)="selectedLearningObjectiveFile($event)" #learningObjectiveFileInput>
+
+        <div class="center">
+            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                <div *ngFor="let test of tests" cdkDrag>
+
+                    <mdb-card>
+                        <mdb-card-body>
+                            <mdb-card-title>
+                                <h4>{{ test["Name"] }}</h4>
+                            </mdb-card-title>
+                            <div class="flex-row">
+
+                                <!-- If value already exists -->
+                                <button *ngIf="test['DatFileName']" mdbBtn type="button" color="primary" outline="true" mdbWavesEffect (click)="dataFileInput.click(); setGlobalUUID(test['Identifier'], false)">{{ test['DatFileName'] }}</button>
+                                <button *ngIf="!test['DatFileName']" mdbBtn type="button" color="primary" outline="true" mdbWavesEffect (click)="dataFileInput.click(); setGlobalUUID(test['Identifier'], false)">Upload Data File</button>
+
+                                <!-- If files don't exist -->
+                                <button *ngIf="test['LOFileName']" mdbBtn type="button" color="primary" outline="true" mdbWavesEffect (click)="learningObjectiveFileInput.click(); setGlobalUUID(test['Identifier'], false)">{{ test['LOFileName'] }}</button>
+                                <button *ngIf="!test['LOFileName']" mdbBtn type="button" color="primary" outline="true" mdbWavesEffect (click)="learningObjectiveFileInput.click(); setGlobalUUID(test['Identifier'], false)">Upload Learning Objective File</button>
+
+                                <div class="dropdown flex-row" mdbDropdown [dropup]="true">
+
+                                    <button mdbDropdownToggle mdbBtn color="primary" class="dropdown-toggle waves-light" type="button" mdbWavesEffect>
+                                      Options
+                                    </button>
+
+                                    <div class="dropdown-menu dropdown-primary">
+                                        <a class="dropdown-item" href="#" (click)="setGlobalUUID(test['Identifier'], true)">Rename</a>
+                                        <a class="dropdown-item" href="#" (click)="deleteTest(test['Identifier'])">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </mdb-card-body>
+                    </mdb-card>
+
+                </div>
+            </div>
+        </div>
+
+        <button #firstStepButton mdbBtn size="sm" color="primary" (click)="processFiles()">CONTINUE</button>
+    </mdb-step>
+
+    <!-- Step 2 -->
+    <mdb-step name="Step 2">
+        <app-file-uploader></app-file-uploader>
+        <!-- <button mdbBtn size="sm" color="primary" (click)="stepper.next()">CONTINUE</button>
+        <button mdbBtn size="sm" color="secondary" (click)="stepper.previous()">BACK</button> -->
+    </mdb-step>
+
+    <!-- Step 3 -->
+    <mdb-step name="Step 3">
+        <p class="pl-2">Finished!</p>
+    </mdb-step>
+</mdb-stepper>
