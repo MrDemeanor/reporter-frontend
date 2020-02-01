@@ -5,8 +5,6 @@ EXPOSE 4200
 ENV GITHUB_USER="MrDemeanor"
 ENV GITHUB_FOLDER="reporter-frontend"
 
-COPY . /app
-
 ENV PATH /app/node_modules/.bin:$PATH
 
 RUN apt-get update \
