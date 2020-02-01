@@ -44,7 +44,7 @@ export class FileUploaderComponent {
     headers.set("Content-Type", "application/json");
 
     this.http
-      .post("http://localhost:8080/api/final_xlsx", formData)
+      .post("http://35.223.228.190:8080/api/final_xlsx", formData)
       .subscribe(data => {
         var wb = utils.book_new();
         wb.Props = {

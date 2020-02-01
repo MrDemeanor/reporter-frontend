@@ -137,7 +137,7 @@ export class StepperComponent implements OnInit {
     this.http
 
       .post(
-        "http://localhost:8080/api/intermediate_xlsx",
+        "http://35.223.228.190:8080/api/intermediate_xlsx",
         JSON.stringify(this.tests)
       )
       .subscribe(data => {
