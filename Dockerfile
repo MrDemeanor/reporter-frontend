@@ -1,8 +1,19 @@
 FROM node:latest
-WORKDIR /app
+
 EXPOSE 4200
+
+ENV GITHUB_USER="MrDemeanor"
+ENV GITHUB_FOLDER="reporter-frontend"
+
 COPY . /app
-ENV PATH=/app/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-RUN /bin/sh -c npm install     \
+
+ENV PATH /app/node_modules/.bin:$PATH
+
+RUN apt-get update \
+    && apt-get install git -y \
+    && git clone "https://github.com/${GITHUB_USER}/${GITHUB_FOLDER}.git" \
+    && cd ${GITHUB_FOLDER} \
+    && npm install \
     && npm install -g @angular/cli
-ENTRYPOINT ["ng" "serve" "--host" "0.0.0.0"]
+
+ENTRYPOINT ["ng", "serve", "--host", "0.0.0.0"]

@@ -29,7 +29,7 @@
     "easy-pie-chart": "^2.1.7",
     "file-saver": "^2.0.2",
     "hammerjs": "^2.0.8",
-    "ng-uikit-pro-standard": "",
+    "ng-uikit-pro-standard": "git+https://oauth2:H5CDxN8jmgRzFDGTtWqB@git.mdbootstrap.com/mdb/angular/ng-uikit-pro-standard.git",
     "randomstring": "^1.1.5",
     "rxjs": "^6.5.4",
     "screenfull": "^3.3.0",
